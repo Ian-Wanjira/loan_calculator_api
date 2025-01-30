@@ -1,0 +1,58 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# If you are using Django migrations
+*/migrations/
+*.pyc
+*.pg
+
+# Local environment settings
+.env
+.env.*
+venv/
+
+# VS Code settings
+.vscode/
+
+# Docker
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.env
+*.env.*
+*.log.*
+*.log.*
+*.pid.*
+*.seed.*
+*.pid.lock.*
+
+# pytest
+.pytest_cache/
