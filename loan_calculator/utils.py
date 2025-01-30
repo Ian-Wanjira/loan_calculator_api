@@ -41,36 +41,35 @@ def calculate_loan(principal, rate, term, compound_frequency, payback_frequency)
     else:
         amount = n(rate, term)
 
+    # Calculate total number of payment periods
+    total_periods = int(term * p)
+
     # Calculate periodic payment using annuity formula
     if p:
         if n is None:
-            payment = amount / (term * p)  # Continuous case
+            payment = amount / total_periods  # Continuous case
         else:
             if rate > 0:
-                payment = (principal * (rate / p)) / (1 - (1 + rate / p) ** (-p * term))
+                payment = (principal * (rate / p)) / (
+                    1 - (1 + rate / p) ** (-total_periods)
+                )
             else:
-                payment = principal / (term * p)  # No interest case
+                payment = principal / total_periods  # No interest case
     else:
         payment = (
             amount / term
         )  # Default to annual if payback frequency is not in the map
 
     # Generate amortization schedule
-    amortization_schedule = {}
+    amortization_schedule = []
     beginning_balance = principal
 
-    for period in range(1, term * p + 1):
+    for period in range(1, total_periods + 1):
         interest_payment = beginning_balance * (rate / p)
         principal_payment = payment - interest_payment
         ending_balance = beginning_balance - principal_payment
 
-        year = (period - 1) // p + 1
-        year_label = f"Year {year}"
-
-        if year_label not in amortization_schedule:
-            amortization_schedule[year_label] = []
-
-        amortization_schedule[year_label].append(
+        amortization_schedule.append(
             {
                 "Period": period,
                 "Beginning Balance": round(beginning_balance, 2),
@@ -84,11 +83,11 @@ def calculate_loan(principal, rate, term, compound_frequency, payback_frequency)
 
     return {
         "Payment Every Month": round(payment, 2),
-        "Total Payments": round(payment * term * p, 2),
-        "Total Interest": round((payment * term * p) - principal, 2),
-        "Principal Percentage": round(principal / (payment * term * p) * 100),
+        "Total Payments": round(payment * total_periods, 2),
+        "Total Interest": round((payment * total_periods) - principal, 2),
+        "Principal Percentage": round(principal / (payment * total_periods) * 100),
         "Interest Percentage": round(
-            ((payment * term * p) - principal) / (payment * term * p) * 100
+            ((payment * total_periods) - principal) / (payment * total_periods) * 100
         ),
         "Amortization Schedule": amortization_schedule,
     }
