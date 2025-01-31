@@ -1,0 +1,1 @@
+web: gunicorn loan_calculator_api.wsgi --log-file -
