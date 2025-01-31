@@ -7,7 +7,10 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
+django-environ = "*"
 dj-database-url = "*"
+psycopg2-binary = "*"
+whitenoise = "*"
 
 [dev-packages]
 
