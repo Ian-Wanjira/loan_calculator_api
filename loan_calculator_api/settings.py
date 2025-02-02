@@ -10,31 +10,30 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
 from django.conf import settings
-import environ
+from dotenv import load_dotenv
+import os
 import dj_database_url
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
+
+# Set the project base directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-k698&3g8e@$-2z5p(ra8^==%w#8b^bds8k4&ks7x$lykbmdkd2"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "loan-calculator-api.onrender.com"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -84,7 +83,7 @@ WSGI_APPLICATION = "loan_calculator_api.wsgi.application"
 
 
 # Database configuration
-DATABASES = {"default": dj_database_url.parse(env("DATABASE_URL"))}
+DATABASES = {"default": dj_database_url.parse(os.getenv("DATABASE_URL"))}
 
 
 # Password validation
